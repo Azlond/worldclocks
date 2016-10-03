@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>World Clocks</title>
+	<style>
+		body {
+			background: black;
+			color: white;
+			font-family: Calibri, sans-serif;
+		}
+		
+		#localTime {
+			text-align: center;
+			font-size: 55pt;
+			margin-top: 5%;
+		}
+		
+		#dayndate {
+			text-align: center;
+			font-size: 20pt;
+		}
+		
+		.tableTime {
+			text-align: center;
+			font-size: 20pt;
+		}
+		
+		table.center {
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		table {
+			border-spacing: 150px 20px;
+		}
+		
+		td {
+			padding: 10px;
+		}
+
+	</style>
+
+	<script>
+		function time() {
+
+			var date = new Date();
+
+			/* local Time*/
+			var localS = date.getSeconds();
+
+			document.getElementById("localTime").innerHTML = calculateTime(-date.getTimezoneOffset() / 60) + ":" + checkTime(localS);
+
+			/*day & date */
+			var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+			var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+			var dayInMonth;
+
+			switch (date.getDate()) {
+				case 1:
+				case 21:
+				case 31:
+					dayInMonth = "st";
+					break;
+				case 2:
+				case 22:
+					dayInMonth = "nd";
+					break;
+				case 3:
+				case 23:
+					dayInMonth = "rd";
+					break;
+				default:
+					"th";
+					break;
+			}
+
+
+			var day = days[date.getDay()];
+			var month = months[date.getMonth()];
+
+
+			document.getElementById("dayndate").innerHTML = day + ", " + month + " " + date.getDate() + dayInMonth;
+
+
+			/* time in table */
+
+
+			/* 11 */
+
+			var city = "Buenos Aires";
+			var timeZoneOffset = "+5.5";
+
+			document.getElementById("t11").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 12 */
+
+			city = "Tokyo";
+			timeZoneOffset = "+9";
+
+			document.getElementById("t12").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 13 */
+
+			city = "";
+			timeZoneOffset = "";
+
+			//document.getElementById("t13").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 21 */
+
+			city = "Denver";
+			timeZoneOffset = "-6";
+
+			document.getElementById("t21").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 22 */
+
+			city = "Melbourne";
+			timeZoneOffset = "+11";
+
+			document.getElementById("t22").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 23 */
+
+			city = "Berlin";
+			timeZoneOffset = "+2";
+
+			document.getElementById("t23").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 31 */
+
+			city = "New York";
+			timeZoneOffset = "-4";
+
+			document.getElementById("t31").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 32 */
+
+			city = "Madrid";
+			timeZoneOffset = "+2";
+
+			document.getElementById("t32").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+			/* 33 */
+
+			city = "";
+			timeZoneOffset = "";
+
+			//document.getElementById("t33").innerHTML = calculateTime(timeZoneOffset) + "<br>" + city;
+
+
+
+			setTimeout(time, 500);
+		}
+
+
+		function checkTime(i) {
+			if (i < 10) {
+				i = "0" + i
+			}; // add zero in front of numbers < 10
+			return i;
+		}
+
+
+		function calculateTime(offset) {
+			var d = new Date();
+
+			var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+			var nd = new Date(utc + (3600000 * offset));
+
+			return checkTime(nd.getHours()) + ":" + checkTime(nd.getMinutes());
+
+		}
+
+	</script>
+
+</head>
+
+<body onload="time()">
+	<div id="localTime">
+
+	</div>
+
+	<p></p>
+
+	<div id="dayndate">
+
+
+	</div>
+
+	<p></p>
+
+	<div>
+
+		<table class="center">
+			<tr>
+				<th id="t11" class="tableTime"></th>
+				<th id="t21" class="tableTime"></th>
+				<th id="t31" class="tableTime"></th>
+			</tr>
+			<tr>
+				<td id="t12" class="tableTime"></td>
+				<td id="t22" class="tableTime"></td>
+				<td id="t32" class="tableTime"></td>
+			</tr>
+			<tr>
+				<td id="t13" class="tableTime"></td>
+				<td id="t23" class="tableTime"></td>
+				<td id="t33" class="tableTime"></td>
+			</tr>
+		</table>
+	</div>
+
+
+
+</body>
+
+</html>
